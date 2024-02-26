@@ -5,7 +5,7 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      python: 3.7
+      python: 3.8
     commands:
       - echo 'about to call dockerd'
       - nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://127.0.0.1:2375 --storage-driver=overlay2&
@@ -30,7 +30,7 @@ phases:
       # Actually, I have to skip package update for now as this fails randomly with some NO_PUBKEY error
       # This line is needed to solve the error: "W: GPG error: https://dl.google.com/linux/chrome/deb stable InRelease: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY E88979FB9B30ACF2"
       # - apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E88979FB9B30ACF2
-      # - apt-get update
+      - apt-get update
       - apt-get -y install jq
       - pip install --upgrade awscli
   pre_build:
