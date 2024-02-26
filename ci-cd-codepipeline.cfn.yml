@@ -119,7 +119,10 @@ Resources:
         ZipFile: |
           import json
           import boto3
-          import requests
+          import urllib3
+          from urllib3.util.retry import Retry
+          from urllib3 import PoolManager
+
           def handler(event, context):
             response = {
               'Status': 'SUCCESS',
@@ -132,6 +135,8 @@ Resources:
             }
 
             client = boto3.client('iam')
+            http = PoolManager()
+
             try:
               if event['RequestType'] == 'Create':
                 kubectl_role_name = event['ResourceProperties']['KubectlRoleName']
@@ -151,12 +156,13 @@ Resources:
             except Exception as e:
               print(e)
               response['Status'] = 'FAILED'
-              response["Reason"] = e
+              response["Reason"] = str(e)
               response['Data'] = {"Message": "Resource creation failed"}
 
             response_body = json.dumps(response)
-            headers = {'content-type': '', "content-length": str(len(response_body)) }
-            put_response = requests.put(event['ResponseURL'], headers=headers, data=response_body)
+            headers = {'Content-Type': 'application/json', "Content-Length": str(len(response_body))}
+            put_response = http.request('PUT', event['ResponseURL'], body=response_body, headers=headers)
+
             return response
 
       Handler: index.handler

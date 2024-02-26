@@ -176,3 +176,5 @@ When creating "myPipeline" the process got stuck when creating "KubectlAssumeRol
 I'm trying to create another stack "myPipeline2".
 
 The other pipeline also didn't worked. But I found that the lambda was failing with the error "AttributeError: module 'botocore.vendored.requests' has no attribute 'put'" so I tried to change the import from "from botocore.vendored import requests" to "import requests".
+
+Ok, so we can't use "requests" without installing them and zipping the code but I will try to use "urllib3" library instead.
