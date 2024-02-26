@@ -21,8 +21,8 @@ phases:
       # Validate the kubectl binary against the checksum file
       - echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
       # Install kubectl
-      - chmod +x ./kubectl ./aws-iam-authenticator      
-      - export PATH=$PWD/:$PATH  
+      - chmod +x ./kubectl ./aws-iam-authenticator
+      - export PATH=$PWD/:$PATH
       - python --version
       - echo 'export PATH=$PWD/:$PATH' >> $HOME/.bashrc
       - echo `kubectl version --client`
