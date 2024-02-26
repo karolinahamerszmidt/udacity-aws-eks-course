@@ -211,3 +211,5 @@ conda activate aws-app
 ```
 
 When running buildspec with pythin 3.8 "awscli" fails with "module 'lib' has no attribute 'X509_V_FLAG_NOTIFY_POLICY'". Gonna try to run it on old python 3.7.
+
+Seems that what solved all the random problems with build pipeline was switching to "aws/codebuild/standard:5.0" and python 3.8.
