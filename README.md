@@ -166,3 +166,13 @@ Path the file:
 ```bash
 kubectl patch configmap/aws-auth -n kube-system --patch "$(cat /tmp/aws-auth-patch.yml)"
 ```
+
+Now I'm creating a stack based on the file `./ci-cd-codepipeline.cfn.yml`.
+
+When creating Cloud Formation stack for the pipeline I got the error "The runtime parameter of python3.7 is no longer supported" so I updated the runtime to 3.8.
+
+When creating "myPipeline" the process got stuck when creating "KubectlAssumeRoleCustomResource". After an hour of waiting I decided to delete the stack but it got stuck deleting the pipeline...
+
+I'm trying to create another stack "myPipeline2".
+
+The other pipeline also didn't worked. But I found that the lambda was failing with the error "AttributeError: module 'botocore.vendored.requests' has no attribute 'put'" so I tried to change the import from "from botocore.vendored import requests" to "import requests".

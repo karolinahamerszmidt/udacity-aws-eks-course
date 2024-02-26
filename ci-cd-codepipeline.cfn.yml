@@ -119,7 +119,7 @@ Resources:
         ZipFile: |
           import json
           import boto3
-          from botocore.vendored import requests
+          import requests
           def handler(event, context):
             response = {
               'Status': 'SUCCESS',
