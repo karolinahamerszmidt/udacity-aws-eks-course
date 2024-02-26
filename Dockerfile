@@ -1,13 +1,9 @@
-# Use the `python:3.7` as a source image from the Amazon ECR Public Gallery
-# We are not using `python:3.7.2-slim` from Dockerhub because it has put a  pull rate limit. 
-FROM public.ecr.aws/sam/build-python3.7:latest
+FROM public.ecr.aws/sam/build-python3.8:latest
 
 COPY . /app
 WORKDIR /app
 
 RUN pip install --upgrade pip
-RUN pip install flask==2.2.2
+RUN pip install -r requirements.txt
 
-
-ENTRYPOINT ["python", "app.py"]
-
+ENTRYPOINT ["gunicorn", "-b", ":8080", "app:APP"]

@@ -198,7 +198,14 @@ aws ssm get-parameter --name JWT_SECRET --region us-east-2
 To delete the secret:
 
 ```bash
-aws ssm delete-parameter --name JWT_SECRET --region us-east-2
+aws ssm delete-parameter --name JWT_SECRET --region us-east-2g
 ```
 
 Added k8s service to deployment.yml file.
+
+Create and activate conda env:
+
+```bash
+conda create --name aws-app python=3.8
+conda activate aws-app
+```
