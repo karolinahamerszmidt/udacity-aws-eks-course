@@ -180,3 +180,5 @@ The other pipeline also didn't worked. But I found that the lambda was failing w
 Ok, so we can't use "requests" without installing them and zipping the code but I will try to use "urllib3" library instead. That worked!
 
 Now the problem was that deployment on k8s was stuck - probably 3 replicas are too much for my 2 micro nodes. Also, the image that was deployed was some random persons image and not the one I was building so I updated that as well.
+
+Now I see that flask app is crashing in k8s because of outdated version of flask. I will try with a newer version.
