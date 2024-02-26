@@ -28,8 +28,8 @@ phases:
       - echo `kubectl version --client`
       - python -m pip install --upgrade --force pip
       # This line is needed to solve the error: "W: GPG error: https://dl.google.com/linux/chrome/deb stable InRelease: The following signatures couldn't be verified because the public key is not available: NO_PUBKEY E88979FB9B30ACF2"
-      - apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E88979FB9B30ACF2
-      - apt-get update
+      # - apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E88979FB9B30ACF2
+      # - apt-get update
       - apt-get -y install jq
       - pip install --upgrade awscli
   pre_build:
