@@ -182,3 +182,23 @@ Ok, so we can't use "requests" without installing them and zipping the code but 
 Now the problem was that deployment on k8s was stuck - probably 3 replicas are too much for my 2 micro nodes. Also, the image that was deployed was some random persons image and not the one I was building so I updated that as well.
 
 Now I see that flask app is crashing in k8s because of outdated version of flask. I will try with a newer version.
+
+Pushing a secret to AWS:
+
+```bash
+aws ssm put-parameter --name JWT_SECRET --overwrite --value "myjwtsecret" --type SecureString
+```
+
+Check if the secret is there:
+
+```bash
+aws ssm get-parameter --name JWT_SECRET
+```
+
+To delete the secret:
+
+```bash
+aws ssm delete-parameter --name JWT_SECRET
+```
+
+Added k8s service to deployment.yml file.
