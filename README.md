@@ -186,19 +186,19 @@ Now I see that flask app is crashing in k8s because of outdated version of flask
 Pushing a secret to AWS:
 
 ```bash
-aws ssm put-parameter --name JWT_SECRET --overwrite --value "myjwtsecret" --type SecureString
+aws ssm put-parameter --name JWT_SECRET --overwrite --value "myjwtsecret" --type SecureString --region us-east-2
 ```
 
 Check if the secret is there:
 
 ```bash
-aws ssm get-parameter --name JWT_SECRET
+aws ssm get-parameter --name JWT_SECRET --region us-east-2
 ```
 
 To delete the secret:
 
 ```bash
-aws ssm delete-parameter --name JWT_SECRET
+aws ssm delete-parameter --name JWT_SECRET --region us-east-2
 ```
 
 Added k8s service to deployment.yml file.
