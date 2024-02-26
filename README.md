@@ -198,7 +198,7 @@ aws ssm get-parameter --name JWT_SECRET --region us-east-2
 To delete the secret:
 
 ```bash
-aws ssm delete-parameter --name JWT_SECRET --region us-east-2g
+aws ssm delete-parameter --name JWT_SECRET --region us-east-2
 ```
 
 Added k8s service to deployment.yml file.
