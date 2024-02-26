@@ -177,4 +177,6 @@ I'm trying to create another stack "myPipeline2".
 
 The other pipeline also didn't worked. But I found that the lambda was failing with the error "AttributeError: module 'botocore.vendored.requests' has no attribute 'put'" so I tried to change the import from "from botocore.vendored import requests" to "import requests".
 
-Ok, so we can't use "requests" without installing them and zipping the code but I will try to use "urllib3" library instead.
+Ok, so we can't use "requests" without installing them and zipping the code but I will try to use "urllib3" library instead. That worked!
+
+Now the problem was that deployment on k8s was stuck - probably 3 replicas are too much for my 2 micro nodes. Also, the image that was deployed was some random persons image and not the one I was building so I updated that as well.

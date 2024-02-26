@@ -27,7 +27,8 @@ phases:
       - echo 'export PATH=$PWD/:$PATH' >> $HOME/.bashrc
       - echo `kubectl version --client`
       - python -m pip install --upgrade --force pip
-      - apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E88979FB9B30ACF2
+      # This line below was needed once. But now it doesn't seem to be the case.
+      # - apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E88979FB9B30ACF2
       - apt-get update
       - apt-get -y install jq
       - pip install --upgrade awscli
