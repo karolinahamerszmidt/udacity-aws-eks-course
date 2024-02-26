@@ -86,3 +86,83 @@ Completing the project involves several steps:
 6. Create a CodeBuild stage which will build, test, and deploy your code
 
 For more detail about each of these steps, see the project lesson.
+
+## Notes
+
+Login to AWS. (use credentials from the course / region: us-east-1 / format: json)
+
+```bash
+aws configure
+```
+
+This is not enought. After that you have to add a token to credentials file:
+
+```bash
+code ~/.aws/credentials
+
+# Add this line at the end of the file
+aws_session_token = YOUR_TOKEN_HERE
+```
+
+Create cluster
+
+```bash
+eksctl create cluster --name eksctl-demo --nodes=2 --version=1.29 --instance-types=t2.micro --region=us-east-2
+```
+
+Delete cluster:
+
+```bash
+eksctl delete cluster eksctl-demo  --region=us-east-2
+```
+
+If your kubectl connection expired you need to update the config:
+
+```bash
+aws eks update-kubeconfig --region us-east-2 --name eksctl-demo
+```
+
+Get AWS user id. (Mine is "046017406246")
+
+```bash
+aws sts get-caller-identity --query Account --output text
+```
+
+Create an IAM role that will connect EKS with CodeBuild:
+
+```bash
+aws iam create-role --role-name UdacityFlaskDeployCBKubectlRole --assume-role-policy-document file://trust.json --output text --query 'Role.Arn'
+```
+
+Now attach a policy to that role:
+
+```bash
+aws iam put-role-policy --role-name UdacityFlaskDeployCBKubectlRole --policy-name eks-describe --policy-document file://iam-role-policy.json
+```
+
+Write down the cureent EKS settings to some temp file:
+
+```bash
+kubectl get -n kube-system configmap/aws-auth -o yaml > /tmp/aws-auth-patch.yml
+```
+
+Edit the config:
+
+```bash
+code /System/Volumes/Data/private/tmp/aws-auth-patch.yml
+```
+
+Add the following next to other similar one:
+
+```yaml
+- groups:
+   	- system:masters
+   	rolearn: arn:aws:iam::046017406246:role/UdacityFlaskDeployCBKubectlRole
+   	username: build  
+```
+
+Path the file:
+
+```bash
+kubectl patch configmap/aws-auth -n kube-system --patch "$(cat /tmp/aws-auth-patch.yml)"
+```
